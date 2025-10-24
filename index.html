@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Readiness Assessment - My College Finance</title>
+    <style>
+        /* MCF CSS Variables - ALWAYS INCLUDE */
+        :root {
+            --mcf-brand-blue: #012699;
+            --mcf-brand-green: #26e011;
+            --mcf-brand-amber: #fdc003;
+            --mcf-brand-black: #000516;
+            --mcf-background: #fafafa;
+            --mcf-foreground: #09090b;
+            --mcf-card: #ffffff;
+            --mcf-card-foreground: #09090b;
+            --mcf-popover: #ffffff;
+            --mcf-popover-foreground: #09090b;
+            --mcf-primary: #336bff;
+            --mcf-primary-foreground: #f8fafc;
+            --mcf-secondary: #f1f5f9;
+            --mcf-secondary-foreground: #64748b;
+            --mcf-muted: #f1f5f9;
+            --mcf-muted-foreground: #64748b;
+            --mcf-accent: #f1f5f9;
+            --mcf-accent-foreground: #64748b;
+            --mcf-destructive: #ef4444;
+            --mcf-destructive-foreground: #f8fafc;
+            --mcf-border: #e2e8f0;
+            --mcf-input: #e2e8f0;
+            --mcf-ring: #09090b;
+            --mcf-radius: 0.5rem;
+            --mcf-transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Color Scheme */
+        body.dark-mode {
+            --mcf-background: #09090b;
+            --mcf-foreground: #ffffff;
+            --mcf-card: #1a1a1f;
+            --mcf-card-foreground: #ffffff;
+            --mcf-popover: #09090b;
+            --mcf-popover-foreground: #ffffff;
+            --mcf-primary: #4c6ef5;
+            --mcf-primary-foreground: #ffffff;
+            --mcf-secondary: #374151;
+            --mcf-secondary-foreground: #ffffff;
+            --mcf-muted: #1c1917;
+            --mcf-muted-foreground: #e2e8f0;
+            --mcf-accent: #374151;
+            --mcf-accent-foreground: #ffffff;
+            --mcf-destructive: #ef4444;
+            --mcf-destructive-foreground: #ffffff;
+            --mcf-border: #374151;
+            --mcf-input: #1f2937;
+            --mcf-ring: #ffffff;
+            --mcf-brand-blue: #3b82f6;
+            --mcf-brand-green: #22c55e;
+            --mcf-brand-amber: #f59e0b;
+            --mcf-brand-black: #ffffff;
+        }
+
+        /* System font stack */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                         'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: var(--mcf-background);
+            color: var(--mcf-foreground);
+            transition: var(--mcf-transition);
+        }
+
+        /* Container */
+        .mcf-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Header */
+        .mcf-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--mcf-border);
+            position: relative;
+        }
+
+        .mcf-logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin: 0 auto 1.5rem;
+            display: block;
+        }
+
+        .mcf-brand-name {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--mcf-brand-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .mcf-tagline {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--mcf-muted-foreground);
+        }
+
+        .mcf-title {
+            font-size: 2.25rem;
+            font-weight: 900;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin: 1.5rem 0 1rem;
+            background: linear-gradient(135deg, var(--mcf-brand-blue), var(--mcf-primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mcf-subtitle {
+            font-size: 1.125rem;
+            color: var(--mcf-muted-foreground);
+            margin-bottom: 1rem;
+        }
+
+        /* Dark Mode Toggle */
+        .mcf-theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            border: 2px solid var(--mcf-border);
+            background: var(--mcf-card);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--mcf-transition);
+            color: var(--mcf-foreground);
+        }
+
+        .mcf-theme-toggle:hover {
+            border-color: var(--mcf-primary);
+            transform: scale(1.1);
+        }
+
+        .mcf-sun-icon,
+        .mcf-moon-icon {
+            position: absolute;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Instructions Section */
+        .instructions-section {
+            background: var(--mcf-card);
+            border: 2px solid var(--mcf-border);
+            border-radius: calc(var(--mcf-radius) * 1.5);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .instructions-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--mcf-brand-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .instructions-text {
+            color: var(--mcf-muted-foreground);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: var(--mcf-card);
+            border: 2px solid var(--mcf-border);
+            border-radius: calc(var(--mcf-radius) * 1.5);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .progress-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .progress-stats {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.875rem;
+            color: var(--mcf-muted-foreground);
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .stat-true { background: var(--mcf-brand-green); }
+        .stat-false { background: var(--mcf-destructive); }
+        .stat-remaining { background: var(--mcf-brand-amber); }
+
+        .progress-bar-container {
+            background: var(--mcf-muted);
+            border-radius: var(--mcf-radius);
+            height: 12px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--mcf-brand-green) 0%, var(--mcf-brand-blue) 100%);
+            border-radius: var(--mcf-radius);
+            transition: width 0.5s ease;
+        }
+
+        .progress-percentage {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            color: var(--mcf-brand-blue);
+        }
+
+        /* Assessment Questions */
+        .assessment-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .question-card {
+            background: var(--mcf-card);
+            border: 2px solid var(--mcf-border);
+            border-radius: calc(var(--mcf-radius) * 1.5);
+            padding: 1.5rem;
+            transition: var(--mcf-transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card.answered {
+            border-color: var(--mcf-brand-blue);
+            background: linear-gradient(135deg, rgba(51, 107, 255, 0.05) 0%, transparent 100%);
+        }
+
+        .question-card.answered-true {
+            border-color: var(--mcf-brand-green);
+            background: linear-gradient(135deg, rgba(38, 224, 17, 0.05) 0%, transparent 100%);
+        }
+
+        .question-card.answered-false {
+            border-color: var(--mcf-destructive);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, transparent 100%);
+        }
+
+        .question-card:hover:not(.answered) {
+            border-color: var(--mcf-brand-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 32px;
+            height: 32px;
+            background: var(--mcf-brand-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+
+        .question-statement {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-right: 3rem;
+            line-height: 1.4;
+        }
+
+        .answer-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .answer-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--mcf-border);
+            background: var(--mcf-background);
+            color: var(--mcf-foreground);
+            border-radius: var(--mcf-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--mcf-transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .answer-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: var(--mcf-brand-blue);
+            background: rgba(51, 107, 255, 0.1);
+        }
+
+        .answer-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .answer-btn.selected {
+            background: var(--mcf-brand-blue);
+            color: white;
+            border-color: var(--mcf-brand-blue);
+        }
+
+        .answer-btn.selected-true {
+            background: var(--mcf-brand-green);
+            color: var(--mcf-brand-black);
+            border-color: var(--mcf-brand-green);
+        }
+
+        .answer-btn.selected-false {
+            background: var(--mcf-destructive);
+            color: white;
+            border-color: var(--mcf-destructive);
+        }
+
+        /* Submit Section */
+        .submit-section {
+            background: var(--mcf-card);
+            border: 2px solid var(--mcf-brand-blue);
+            border-radius: calc(var(--mcf-radius) * 2);
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            animation: scaleUp 0.5s ease;
+        }
+
+        .submit-card {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .submit-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--mcf-brand-blue);
+            margin-bottom: 1rem;
+        }
+
+        .submit-message {
+            color: var(--mcf-muted-foreground);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .submit-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+            background: linear-gradient(135deg, var(--mcf-card) 0%, rgba(51, 107, 255, 0.05) 100%);
+            border: 2px solid var(--mcf-brand-blue);
+            border-radius: calc(var(--mcf-radius) * 2);
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .results-section.show {
+            display: block;
+            animation: scaleUp 0.5s ease;
+        }
+
+        .results-title {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--mcf-brand-blue), var(--mcf-brand-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 1rem 0;
+            color: var(--mcf-brand-green);
+        }
+
+        .score-message {
+            font-size: 1.125rem;
+            color: var(--mcf-muted-foreground);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Guidance Section */
+        .guidance-section {
+            background: var(--mcf-card);
+            border: 2px solid var(--mcf-border);
+            border-radius: var(--mcf-radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .guidance-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--mcf-brand-blue);
+            margin-bottom: 1rem;
+        }
+
+        .guidance-text {
+            font-size: 1rem;
+            color: var(--mcf-foreground);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .next-steps {
+            margin-bottom: 1.5rem;
+        }
+
+        .next-steps-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--mcf-brand-green);
+            margin-bottom: 0.75rem;
+        }
+
+        .next-steps-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .next-steps-list li {
+            background: var(--mcf-muted);
+            border-left: 4px solid var(--mcf-brand-green);
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0 var(--mcf-radius) var(--mcf-radius) 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .next-steps-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .important-note {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid var(--mcf-brand-amber);
+            border-radius: var(--mcf-radius);
+            padding: 1rem;
+        }
+
+        .important-note-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--mcf-brand-amber);
+            margin-bottom: 0.5rem;
+        }
+
+        .important-note-text {
+            font-size: 0.9rem;
+            color: var(--mcf-foreground);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .mcf-link {
+            color: var(--mcf-brand-blue);
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        .mcf-link:hover {
+            color: var(--mcf-brand-green);
+        }
+
+        .readiness-level {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--mcf-radius);
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .readiness-ready {
+            background: var(--mcf-brand-green);
+            color: var(--mcf-brand-black);
+        }
+
+        .readiness-almost {
+            background: var(--mcf-brand-amber);
+            color: var(--mcf-brand-black);
+        }
+
+        .readiness-review {
+            background: var(--mcf-destructive);
+            color: white;
+        }
+
+        .results-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--mcf-background);
+            padding: 1rem;
+            border-radius: var(--mcf-radius);
+            border: 1px solid var(--mcf-border);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--mcf-brand-blue);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--mcf-muted-foreground);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .key-takeaways {
+            background: var(--mcf-background);
+            border: 1px solid var(--mcf-border);
+            border-radius: var(--mcf-radius);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .key-takeaways h3 {
+            color: var(--mcf-brand-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .takeaway-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .takeaway-icon {
+            color: var(--mcf-brand-green);
+            font-size: 1.25rem;
+            margin-top: 0.125rem;
+        }
+
+        .takeaway-text {
+            color: var(--mcf-muted-foreground);
+            line-height: 1.5;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .mcf-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: var(--mcf-radius);
+            transition: var(--mcf-transition);
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            font-family: inherit;
+            gap: 0.5rem;
+        }
+
+        .mcf-btn-primary {
+            background-color: var(--mcf-primary);
+            color: var(--mcf-primary-foreground);
+        }
+
+        .mcf-btn-primary:hover {
+            background-color: var(--mcf-brand-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .mcf-btn-success {
+            background-color: var(--mcf-brand-green);
+            color: var(--mcf-brand-black);
+        }
+
+        .mcf-btn-success:hover {
+            background-color: #1fb80d;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(38, 224, 17, 0.2);
+        }
+
+        .mcf-btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--mcf-border);
+            color: var(--mcf-foreground);
+        }
+
+        .mcf-btn-outline:hover {
+            border-color: var(--mcf-primary);
+            background-color: rgba(51, 107, 255, 0.05);
+        }
+
+        /* Footer */
+        .mcf-footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--mcf-border);
+        }
+
+        .mcf-footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .mcf-footer-link {
+            color: var(--mcf-muted-foreground);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+        }
+
+        .mcf-footer-link:hover {
+            color: var(--mcf-brand-blue);
+            text-decoration: underline;
+        }
+
+        .mcf-copyright {
+            font-size: 0.75rem;
+            color: var(--mcf-muted-foreground);
+        }
+
+        /* Animations */
+        @keyframes scaleUp {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mcf-title {
+                font-size: 1.75rem;
+            }
+
+            .answer-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .results-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .submit-actions {
+                flex-direction: column;
+            }
+
+            .mcf-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mcf-container">
+        <!-- Header -->
+        <header class="mcf-header">
+            <button id="mcf-theme-toggle" class="mcf-theme-toggle" aria-label="Toggle dark mode">
+                <svg class="mcf-sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="10" r="4" fill="currentColor"/>
+                    <path d="M10 0v4M10 16v4M20 10h-4M4 10H0M17.07 2.93l-2.83 2.83M5.76 14.24l-2.83 2.83M17.07 17.07l-2.83-2.83M5.76 5.76L2.93 2.93" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <svg class="mcf-moon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:none;">
+                    <path d="M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C10.3395 3 10.6734 3.02389 11 3.07039C9.27477 4.07544 8 5.8965 8 8C8 11.3137 10.6863 14 14 14C15.1035 14 16.0754 13.6238 16.9296 12.9998C16.9762 13.3266 17 13.6605 17 14Z" fill="currentColor"/>
+                </svg>
+            </button>
+
+            <img src="https://static.wixstatic.com/media/c24a60_2b6231b666214539ae22ebd2dffe7a09~mv2.png" 
+                 alt="My College Finance Logo" 
+                 class="mcf-logo">
+            <div class="mcf-brand-name">MY COLLEGE FINANCE</div>
+            <div class="mcf-tagline">EDUCATE • MOTIVATE • ELEVATE</div>
+            <h1 class="mcf-title">Document Readiness Assessment</h1>
+            <p class="mcf-subtitle">Test your FAFSA preparation and identify what you still need to complete</p>
+        </header>
+        
+        <!-- Instructions Section -->
+        <div class="instructions-section">
+            <h2 class="instructions-title">🧠 Interactive Quiz: Document Readiness Assessment</h2>
+            <p class="instructions-text">Test your FAFSA preparation knowledge! Each question has multiple answer options. Choose the response that best describes your current situation to get an accurate readiness assessment.</p>
+        </div>
+
+        <!-- Progress Section -->
+        <div class="progress-section">
+            <div class="progress-header">
+                <div class="progress-title">📊 Your Progress</div>
+                <div class="progress-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon stat-true">✓</div>
+                        <span id="true-count">0</span> Correct
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon stat-false">✗</div>
+                        <span id="false-count">0</span> Incorrect
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon stat-remaining">?</div>
+                        <span id="remaining-count">10</span> Remaining
+                    </div>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+            </div>
+            <div class="progress-percentage" id="progress-percentage">0% Complete</div>
+        </div>
+
+        <!-- Assessment Questions -->
+        <div class="assessment-grid" id="assessment-grid">
+            <!-- Questions will be dynamically generated here -->
+        </div>
+
+        <!-- Submit Section -->
+        <div class="submit-section" id="submit-section" style="display: none;">
+            <div class="submit-card">
+                <h2 class="submit-title">🎯 Ready to Submit?</h2>
+                <p class="submit-message">You've answered all questions! Review your responses and submit when ready.</p>
+                <div class="submit-actions">
+                    <button class="mcf-btn mcf-btn-primary" onclick="submitAssessment()">
+                        📊 Submit Assessment & View Results
+                    </button>
+                    <button class="mcf-btn mcf-btn-outline" onclick="resetAssessment()">
+                        🔄 Start Over
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="results-section">
+            <h2 class="results-title">🎉 Assessment Complete!</h2>
+            <div class="score-display" id="final-score">0/10</div>
+            <div class="readiness-level" id="readiness-level">Ready to Start!</div>
+            <p class="score-message" id="score-message">Great job!</p>
+            
+            <!-- Guidance Section -->
+            <div class="guidance-section" id="guidance-section" style="display: none;">
+                <h3 class="guidance-title">💡 Your Personal Guidance</h3>
+                <p class="guidance-text" id="guidance-text">This is your roadmap to success!</p>
+                
+                <div class="next-steps" id="next-steps">
+                    <h4 class="next-steps-title">🎯 Your Next Steps</h4>
+                    <ul class="next-steps-list" id="next-steps-list">
+                        <!-- Next steps will be populated by JavaScript -->
+                    </ul>
+                </div>
+                
+                <div class="important-note">
+                    <h4 class="important-note-title">⚠️ Important Reminder</h4>
+                    <p class="important-note-text">
+                        This assessment is a helpful starting point, but it's not the final word on your FAFSA readiness. 
+                        Always refer to the official <a href="https://studentaid.gov" target="_blank" class="mcf-link">FAFSA website</a> 
+                        for the most current information and requirements. Your school's financial aid office is also an excellent resource for personalized guidance.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="results-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="readiness-stat">0%</div>
+                    <div class="stat-label">Readiness</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="time-stat">0:00</div>
+                    <div class="stat-label">Time Taken</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="status-stat">-</div>
+                    <div class="stat-label">Status</div>
+                </div>
+            </div>
+
+            <div class="key-takeaways">
+                <h3>🏁 Key Takeaways</h3>
+                <div class="takeaway-item">
+                    <span class="takeaway-icon">✅</span>
+                    <span class="takeaway-text">Conducting a final readiness check ensures accuracy and peace of mind.</span>
+                </div>
+                <div class="takeaway-item">
+                    <span class="takeaway-icon">✅</span>
+                    <span class="takeaway-text">Placeholder data keeps your timeline on track — don't wait for perfection.</span>
+                </div>
+                <div class="takeaway-item">
+                    <span class="takeaway-icon">✅</span>
+                    <span class="takeaway-text">Organization and early action are your greatest FAFSA advantages.</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="mcf-btn mcf-btn-primary" onclick="resetAssessment()">
+                    🔄 Retake Assessment
+                </button>
+                <button class="mcf-btn mcf-btn-success" onclick="saveAndDownload()">
+                    📥 Download Results PDF
+                </button>
+                <button class="mcf-btn mcf-btn-outline" onclick="downloadTemplate()">
+                    📄 Download Template
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mcf-footer">
+            <div class="mcf-footer-links">
+                <a href="https://www.mycollegefinance.com/" target="_blank" class="mcf-footer-link">Main Website</a>
+                <span>•</span>
+                <a href="https://www.mycollegefinance.com/privacy-policy" target="_blank" class="mcf-footer-link">Privacy Policy</a>
+                <span>•</span>
+                <a href="https://www.mycollegefinance.com/terms-policy" target="_blank" class="mcf-footer-link">Terms of Service</a>
+                <span>•</span>
+                <a href="https://linktr.ee/mycollegefinance" target="_blank" class="mcf-footer-link">Social Media</a>
+            </div>
+            <p class="mcf-copyright">© 2025 My College Finance. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" 
+            onerror="this.onerror=null; this.src='https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js';"></script>
+    <script>
+        // Assessment Questions Data
+        const assessmentData = [
+            {
+                id: 1,
+                question: "How would you describe your FSA ID situation?",
+                options: [
+                    "I have created and tested both my student and parent FSA IDs",
+                    "I have my student FSA ID but still need to create parent FSA ID(s)",
+                    "I have started creating FSA IDs but haven't finished",
+                    "I haven't created any FSA IDs yet"
+                ],
+                correct: 0,
+                explanation: "FSA IDs are required for all contributors to complete the FAFSA. Both student and parent(s) need separate FSA IDs."
+            },
+            {
+                id: 2,
+                question: "What's your tax document situation?",
+                options: [
+                    "I know exactly where my 2023 tax return and W-2 forms are stored",
+                    "I have most tax documents but might be missing some",
+                    "I have some tax documents but need to locate others",
+                    "I haven't gathered any tax documents yet"
+                ],
+                correct: 0,
+                explanation: "You'll need your 2023 tax documents to complete the FAFSA. Know where to find your 1040, W-2s, and other tax forms."
+            },
+            {
+                id: 3,
+                question: "How prepared are you with financial documentation?",
+                options: [
+                    "I have gathered all income and asset documentation for every contributor",
+                    "I have most financial documents but might be missing some details",
+                    "I have some financial documents but need to gather more",
+                    "I haven't started gathering financial documentation"
+                ],
+                correct: 0,
+                explanation: "All contributors need to provide their financial information. This includes income, assets, and other financial details."
+            },
+            {
+                id: 4,
+                question: "What's your school selection status?",
+                options: [
+                    "I have identified my top 10 schools and know their FAFSA codes",
+                    "I have a list of schools but need to find their FAFSA codes",
+                    "I have some schools in mind but haven't finalized my list",
+                    "I haven't started thinking about school selection"
+                ],
+                correct: 0,
+                explanation: "You can list up to 10 schools on the FAFSA. Having school codes ready speeds up the application process."
+            },
+            {
+                id: 5,
+                question: "How do you plan to handle estimated values?",
+                options: [
+                    "I have a plan to update any placeholders before final submission",
+                    "I'll use estimates and update them when I get the real numbers",
+                    "I'm not sure how to handle estimated values",
+                    "I don't understand what placeholder data means"
+                ],
+                correct: 0,
+                explanation: "You can use estimated values initially, but should update with actual figures before the final deadline."
+            },
+            {
+                id: 6,
+                question: "How organized are your documents?",
+                options: [
+                    "My documents are securely stored in a digital or physical folder",
+                    "I have most documents organized but some are scattered",
+                    "I have documents but they're not well organized",
+                    "I don't have a system for organizing documents"
+                ],
+                correct: 0,
+                explanation: "Organized document storage ensures you can quickly access information when needed during FAFSA completion."
+            },
+            {
+                id: 7,
+                question: "What would you do if you forgot your FSA password?",
+                options: [
+                    "I know exactly how to retrieve a lost FSA password or username",
+                    "I think I know how to reset it but haven't tried",
+                    "I would need to look up the process",
+                    "I have no idea how to recover my FSA account"
+                ],
+                correct: 0,
+                explanation: "FSA ID recovery is important. Know the process to reset passwords or recover usernames if needed."
+            },
+            {
+                id: 8,
+                question: "What's your backup plan for missing documents?",
+                options: [
+                    "I understand what to do if I'm missing a tax form on deadline day",
+                    "I have a general idea but would need to research specifics",
+                    "I'm not sure what to do if documents are missing",
+                    "I haven't thought about missing documents"
+                ],
+                correct: 0,
+                explanation: "Have a backup plan for missing documents. You may need to use estimated values or request extensions."
+            },
+            {
+                id: 9,
+                question: "How dependent are you on others for FAFSA completion?",
+                options: [
+                    "I can complete the FAFSA without waiting on anyone else's login",
+                    "I need one other person to complete their section",
+                    "I need multiple people to help with their sections",
+                    "I'm not sure who needs to be involved in my FAFSA"
+                ],
+                correct: 0,
+                explanation: "All contributors need to complete their sections. Ensure everyone is ready to participate in the process."
+            },
+            {
+                id: 10,
+                question: "How confident do you feel about starting your FAFSA?",
+                options: [
+                    "I feel confident and ready to begin the application",
+                    "I feel mostly ready but have some concerns",
+                    "I feel somewhat prepared but need more information",
+                    "I don't feel ready to start the FAFSA yet"
+                ],
+                correct: 0,
+                explanation: "Confidence comes from being prepared. If you feel ready, you're likely well-prepared for the FAFSA process."
+            }
+        ];
+
+        // Application State
+        let assessmentState = {
+            answers: {},
+            startTime: Date.now(),
+            correctCount: 0,
+            totalQuestions: 0
+        };
+
+        // Initialize assessment
+        function initializeAssessment() {
+            const grid = document.getElementById('assessment-grid');
+            grid.innerHTML = '';
+
+            assessmentData.forEach(question => {
+                const card = createQuestionCard(question);
+                grid.appendChild(card);
+            });
+
+            loadSavedState();
+            updateProgress();
+        }
+
+        // Create question card HTML
+        function createQuestionCard(question) {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `question-${question.id}`;
+            
+            card.innerHTML = `
+                <div class="question-number">${question.id}</div>
+                <h3 class="question-statement">${question.question}</h3>
+                <div class="answer-buttons"></div>
+            `;
+            
+            // Add answer buttons with event listeners
+            const answerButtonsContainer = card.querySelector('.answer-buttons');
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = option;
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    answerQuestion(question.id, index);
+                });
+                answerButtonsContainer.appendChild(button);
+            });
+            
+            return card;
+        }
+
+        // Handle answer selection
+        function answerQuestion(questionId, selectedIndex) {
+            const question = assessmentData.find(q => q.id === questionId);
+            const isCorrect = selectedIndex === question.correct;
+            
+            console.log(`Answering question ${questionId}: selected ${selectedIndex}, correct: ${isCorrect}`);
+            console.log(`Current answers before:`, Object.keys(assessmentState.answers).length);
+            
+            // Check if this option is already selected
+            const currentAnswer = assessmentState.answers[questionId];
+            if (currentAnswer && currentAnswer.selected === selectedIndex) {
+                // Unselect if clicking the same option
+                delete assessmentState.answers[questionId];
+                console.log(`Unselected question ${questionId}`);
+            } else {
+                // Save answer
+                assessmentState.answers[questionId] = {
+                    selected: selectedIndex,
+                    correct: isCorrect,
+                    timestamp: Date.now()
+                };
+                console.log(`Selected question ${questionId}`);
+            }
+            
+            console.log(`Current answers after:`, Object.keys(assessmentState.answers).length);
+            
+            // Update UI
+            const card = document.getElementById(`question-${questionId}`);
+            const buttons = card.querySelectorAll('.answer-btn');
+            
+            // Remove previous selections
+            buttons.forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Check if we're unselecting or selecting
+            if (assessmentState.answers[questionId]) {
+                // Highlight the selected answer
+                buttons[selectedIndex].classList.add('selected');
+                card.classList.add('answered');
+            } else {
+                // Remove answered state if unselected
+                card.classList.remove('answered');
+            }
+            
+            updateProgress();
+            saveState();
+            
+            // Check if all questions are answered and show submit button
+            if (Object.keys(assessmentState.answers).length === assessmentData.length) {
+                showSubmitButton();
+            }
+        }
+
+        // Update progress display
+        function updateProgress() {
+            const answered = Object.keys(assessmentState.answers).length;
+            const total = assessmentData.length;
+            const percentage = Math.round((answered / total) * 100);
+            
+            // Recalculate correct count from current answers
+            const currentCorrectCount = Object.values(assessmentState.answers).filter(answer => answer.correct).length;
+            
+            document.getElementById('true-count').textContent = currentCorrectCount;
+            document.getElementById('false-count').textContent = answered - currentCorrectCount;
+            document.getElementById('remaining-count').textContent = total - answered;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+            document.getElementById('progress-percentage').textContent = `${percentage}% Complete`;
+            
+            console.log(`Progress: ${answered}/${total} questions answered (${percentage}%)`);
+        }
+
+        // Show submit button when all questions are answered
+        function showSubmitButton() {
+            const submitSection = document.getElementById('submit-section');
+            if (submitSection) {
+                submitSection.style.display = 'block';
+                // Don't auto-scroll - let user stay where they are
+            }
+        }
+
+        // Update question feedback to show correct/incorrect after submission
+        function updateQuestionFeedback() {
+            Object.entries(assessmentState.answers).forEach(([questionId, answer]) => {
+                const card = document.getElementById(`question-${questionId}`);
+                const buttons = card.querySelectorAll('.answer-btn');
+                
+                // Disable all buttons after submission
+                buttons.forEach(btn => btn.disabled = true);
+                
+                // Remove the neutral 'selected' class
+                buttons[answer.selected].classList.remove('selected');
+                
+                // Add the correct/incorrect feedback
+                buttons[answer.selected].classList.add(answer.correct ? 'selected-true' : 'selected-false');
+                card.classList.add(answer.correct ? 'answered-true' : 'answered-false');
+            });
+        }
+
+        // Submit assessment and show results
+        function submitAssessment() {
+            showResults();
+        }
+
+        // Show results
+        function showResults() {
+            // First, update all question cards to show correct/incorrect feedback
+            updateQuestionFeedback();
+            
+            const resultsSection = document.getElementById('results-section');
+            // Calculate correct count from current answers
+            const correctCount = Object.values(assessmentState.answers).filter(answer => answer.correct).length;
+            const total = assessmentData.length;
+            const readinessPercentage = Math.round((correctCount / total) * 100);
+            const timeTaken = Math.floor((Date.now() - assessmentState.startTime) / 1000);
+            const minutes = Math.floor(timeTaken / 60);
+            const seconds = timeTaken % 60;
+            
+            document.getElementById('final-score').textContent = `${correctCount}/${total}`;
+            document.getElementById('readiness-stat').textContent = `${readinessPercentage}%`;
+            document.getElementById('time-stat').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Determine readiness level with supportive guidance
+            let readinessLevel, message, levelClass, guidance, nextSteps;
+            if (correctCount >= 9) {
+                readinessLevel = '🚀 You\'re Well-Prepared!';
+                message = 'Great job! You have a solid understanding of what\'s needed for FAFSA completion. You\'re in a strong position to begin your application.';
+                levelClass = 'readiness-ready';
+                guidance = 'You\'re ready to tackle the FAFSA with confidence. Remember to double-check all information against official sources.';
+                nextSteps = [
+                    'Start your FAFSA application at studentaid.gov',
+                    'Keep your documents organized and accessible',
+                    'Set reminders for important deadlines',
+                    'Don\'t hesitate to reach out to your school\'s financial aid office if you have questions'
+                ];
+            } else if (correctCount >= 6) {
+                readinessLevel = '⚙️ You\'re Almost There!';
+                message = 'You\'re on the right track! You have most of what you need, with just a few areas to focus on. This is completely normal and manageable.';
+                levelClass = 'readiness-almost';
+                guidance = 'You\'re closer than you think! Focus on the areas below, and you\'ll be ready to complete your FAFSA successfully.';
+                nextSteps = [
+                    'Review the areas you missed and gather the missing information',
+                    'Create a checklist of remaining items to complete',
+                    'Set aside time to organize your documents',
+                    'Consider reaching out to a school counselor or financial aid office for guidance'
+                ];
+            } else {
+                readinessLevel = '📚 Let\'s Build Your Foundation';
+                message = 'No worries at all! Everyone starts somewhere, and this assessment is just a starting point. You have plenty of time to get everything organized.';
+                levelClass = 'readiness-review';
+                guidance = 'This is your roadmap to success! Take it step by step, and remember that many students feel overwhelmed at first. You\'ve got this!';
+                nextSteps = [
+                    'Start by creating your FSA ID at studentaid.gov',
+                    'Gather your tax documents and financial records',
+                    'Make a list of schools you\'re interested in',
+                    'Consider attending a FAFSA workshop or meeting with a counselor',
+                    'Take your time - there\'s no rush to complete everything at once'
+                ];
+            }
+            
+            document.getElementById('readiness-level').textContent = readinessLevel;
+            document.getElementById('readiness-level').className = `readiness-level ${levelClass}`;
+            document.getElementById('score-message').textContent = message;
+            document.getElementById('status-stat').textContent = correctCount >= 9 ? 'Ready' : (correctCount >= 6 ? 'Almost' : 'Review');
+            
+            // Populate guidance section
+            document.getElementById('guidance-text').textContent = guidance;
+            const nextStepsList = document.getElementById('next-steps-list');
+            nextStepsList.innerHTML = '';
+            nextSteps.forEach(step => {
+                const li = document.createElement('li');
+                li.textContent = step;
+                nextStepsList.appendChild(li);
+            });
+            
+            // Show guidance section
+            document.getElementById('guidance-section').style.display = 'block';
+            
+            resultsSection.classList.add('show');
+            
+            // Smooth scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Reset assessment
+        function resetAssessment() {
+            assessmentState = {
+                answers: {},
+                startTime: Date.now(),
+                correctCount: 0,
+                totalQuestions: 0
+            };
+            
+            localStorage.removeItem('mcf-readiness-assessment-state');
+            document.getElementById('results-section').classList.remove('show');
+            document.getElementById('submit-section').style.display = 'none';
+            
+            initializeAssessment();
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Save state to localStorage
+        function saveState() {
+            const state = {
+                ...assessmentState
+            };
+            localStorage.setItem('mcf-readiness-assessment-state', JSON.stringify(state));
+        }
+
+        // Load saved state
+        function loadSavedState() {
+            const saved = localStorage.getItem('mcf-readiness-assessment-state');
+            if (saved) {
+                const state = JSON.parse(saved);
+                assessmentState = {
+                    ...state
+                };
+                
+                // Restore answers
+                Object.entries(state.answers || {}).forEach(([questionId, answer]) => {
+                    const question = assessmentData.find(q => q.id === parseInt(questionId));
+                    if (question) {
+                        // Recreate the answered state
+                        const card = document.getElementById(`question-${questionId}`);
+                        const buttons = card.querySelectorAll('.answer-btn');
+                        
+                        // Don't disable buttons when loading saved state - allow changes
+                        buttons[answer.selected].classList.add('selected');
+                        card.classList.add('answered');
+                    }
+                });
+                
+                // Show submit button if all questions answered
+                if (Object.keys(state.answers || {}).length === assessmentData.length) {
+                    showSubmitButton();
+                }
+            }
+        }
+
+        // Save and download PDF
+        async function saveAndDownload() {
+            const button = event.target;
+            const originalText = button.innerHTML;
+            
+            try {
+                console.log('Starting PDF generation...');
+                button.innerHTML = '⏳ Generating PDF...';
+                button.disabled = true;
+                
+                if (typeof window.jspdf === 'undefined') {
+                    throw new Error('PDF library not loaded');
+                }
+                
+                console.log('PDF library found, creating document...');
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                console.log('Document created, adding content...');
+            
+            // Calculate correct count from current answers
+            const correctCount = Object.values(assessmentState.answers).filter(answer => answer.correct).length;
+            const total = assessmentData.length;
+            const readinessPercentage = Math.round((correctCount / total) * 100);
+            const timeTaken = Math.floor((Date.now() - assessmentState.startTime) / 1000);
+            const minutes = Math.floor(timeTaken / 60);
+            const seconds = timeTaken % 60;
+            
+            // Helper function to add colored rectangle
+            function addColoredRect(x, y, width, height, color) {
+                try {
+                    if (Array.isArray(color) && color.length === 3) {
+                        doc.setFillColor(color[0], color[1], color[2]);
+                    } else {
+                        doc.setFillColor(color);
+                    }
+                    doc.rect(x, y, width, height, 'F');
+                } catch (error) {
+                    console.warn('Error adding colored rectangle:', error);
+                    // Fallback to default color
+                    doc.setFillColor(0, 0, 0);
+                    doc.rect(x, y, width, height, 'F');
+                }
+            }
+            
+            // Helper function to safely set text color
+            function setTextColor(r, g, b) {
+                try {
+                    doc.setTextColor(r, g, b);
+                } catch (error) {
+                    console.warn('Error setting text color:', error);
+                    doc.setTextColor(0, 0, 0); // Fallback to black
+                }
+            }
+            
+                // Add comprehensive content
+                console.log('Adding content...');
+                
+                // Header
+                doc.setFontSize(20);
+                doc.text('MY COLLEGE FINANCE', 20, 30);
+                doc.setFontSize(16);
+                doc.text('Document Readiness Assessment Results', 20, 45);
+                
+                // Results summary
+                doc.setFontSize(14);
+                doc.text(`Assessment Complete!`, 20, 65);
+                doc.text(`Score: ${correctCount}/${total} (${readinessPercentage}%)`, 20, 80);
+                doc.text(`Readiness: ${readinessPercentage}%`, 20, 95);
+                
+                // Time and date
+                const timeTaken2 = Math.floor((Date.now() - assessmentState.startTime) / 1000);
+                const minutes2 = Math.floor(timeTaken2 / 60);
+                const seconds2 = timeTaken2 % 60;
+                doc.text(`Time Taken: ${minutes2}:${seconds2.toString().padStart(2, '0')}`, 20, 110);
+                doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 125);
+                
+                // Readiness level
+                let readinessLevel, status;
+                if (correctCount >= 9) {
+                    readinessLevel = 'You\'re Well-Prepared!';
+                    status = 'Ready';
+                } else if (correctCount >= 6) {
+                    readinessLevel = 'You\'re Almost There!';
+                    status = 'Almost';
+                } else {
+                    readinessLevel = 'Let\'s Build Your Foundation';
+                    status = 'Review';
+                }
+                
+                doc.text(`Status: ${readinessLevel}`, 20, 140);
+                doc.text(`Assessment Status: ${status}`, 20, 155);
+                
+                // Key takeaways
+                doc.setFontSize(12);
+                doc.text('Key Takeaways:', 20, 175);
+                doc.setFontSize(10);
+                doc.text('• Conducting a final readiness check ensures accuracy and peace of mind', 20, 190);
+                doc.text('• Organization and early action are your greatest FAFSA advantages', 20, 205);
+                doc.text('• Always refer to the official FAFSA website for current information', 20, 220);
+                
+                // Footer
+                doc.setFontSize(8);
+                doc.text('© 2025 My College Finance. All rights reserved.', 20, 280);
+                
+                // Add second page with question details
+                console.log('Adding question details...');
+                doc.addPage();
+                
+                // Page 2 header
+                doc.setFontSize(16);
+                doc.text('Question-by-Question Results', 20, 30);
+                
+                // Question breakdown
+                let yPos = 50;
+                let pageCount = 1;
+                Object.entries(assessmentState.answers).forEach(([questionId, answer]) => {
+                    const question = assessmentData.find(q => q.id === parseInt(questionId));
+                    if (question) {
+                        // Check if we need a new page
+                        if (yPos > 250) {
+                            doc.addPage();
+                            pageCount++;
+                            yPos = 30;
+                            doc.setFontSize(12);
+                            doc.text(`Question Results (Page ${pageCount})`, 20, yPos);
+                            yPos += 20;
+                        }
+                        
+                        const statusIcon = answer.correct ? '[READY]' : '[NEEDS ATTENTION]';
+                        const selectedAnswer = question.options[answer.selected];
+                        
+                        doc.setFontSize(10);
+                        doc.text(`${question.id}. ${statusIcon} ${question.question}`, 20, yPos);
+                        yPos += 8;
+                        doc.text(`Your answer: ${selectedAnswer}`, 25, yPos);
+                        yPos += 15;
+                    }
+                });
+                
+                // Add personal guidance on a new page if needed
+                if (yPos > 200) {
+                    doc.addPage();
+                    yPos = 30;
+                }
+                
+                // Personal guidance section
+                doc.setFontSize(12);
+                doc.text('Personal Guidance:', 20, yPos);
+                yPos += 15;
+                doc.setFontSize(10);
+                if (correctCount >= 9) {
+                    doc.text('You\'re ready to tackle the FAFSA with confidence!', 20, yPos);
+                } else if (correctCount >= 6) {
+                    doc.text('You\'re closer than you think! Focus on the areas you missed.', 20, yPos);
+                } else {
+                    doc.text('This is your roadmap to success! Take it step by step.', 20, yPos);
+                }
+                
+                console.log('Content added, saving...');
+                await new Promise(resolve => setTimeout(resolve, 100));
+            
+                // Save the PDF
+                console.log('Saving PDF...');
+                doc.save('MCF-Document-Readiness-Assessment-Results.pdf');
+                console.log('PDF saved successfully!');
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                alert('Error generating PDF: ' + error.message + '. Please try again.');
+            } finally {
+                // Reset button state
+                if (typeof button !== 'undefined') {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }
+            }
+        }
+
+        // Download blank template
+        function downloadTemplate() {
+            try {
+                if (typeof window.jspdf === 'undefined') {
+                    alert('PDF library not loaded. Please refresh the page and try again.');
+                    return;
+                }
+                
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                // Helper function to safely set text color
+                function setTextColor(r, g, b) {
+                    try {
+                        doc.setTextColor(r, g, b);
+                    } catch (error) {
+                        console.warn('Error setting text color:', error);
+                        doc.setTextColor(0, 0, 0); // Fallback to black
+                    }
+                }
+            
+            // Add MCF branding
+            doc.setFontSize(20);
+            setTextColor(1, 38, 153);
+            doc.text('MY COLLEGE FINANCE', 105, 20, { align: 'center' });
+            
+            doc.setFontSize(10);
+            setTextColor(100, 116, 139);
+            doc.text('EDUCATE • MOTIVATE • ELEVATE', 105, 28, { align: 'center' });
+            
+            // Add title
+            doc.setFontSize(16);
+            setTextColor(0, 0, 0);
+            doc.text('Document Readiness Assessment Template', 105, 45, { align: 'center' });
+            
+            doc.setFontSize(10);
+            doc.text('Name: _______________________  Date: ___________', 20, 60);
+            
+            // Add instructions
+            doc.setFontSize(12);
+            doc.text('Instructions: Mark each statement as TRUE or FALSE', 20, 75);
+            
+            // Add questions
+            doc.setFontSize(10);
+            let yPos = 90;
+            
+            assessmentData.forEach((question, index) => {
+                if (yPos > 250) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+                
+                doc.text(`${question.id}. ${question.question}`, 20, yPos);
+                yPos += 8;
+                
+                // Add options
+                question.options.forEach((option, optIndex) => {
+                    doc.text(`   [ ] ${option}`, 25, yPos);
+                    yPos += 6;
+                });
+                
+                yPos += 8;
+            });
+            
+            // Add scoring section
+            if (yPos > 200) {
+                doc.addPage();
+                yPos = 20;
+            }
+            
+            doc.setFontSize(12);
+            doc.text('Scoring:', 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(10);
+            doc.text('9–10 = Ready to Start!', 20, yPos);
+            yPos += 8;
+            doc.text('6–8 = Almost There — review missing items.', 20, yPos);
+            yPos += 8;
+            doc.text('5 or less = Needs Review — use the checklist and finish gathering docs first.', 20, yPos);
+            
+            // Add footer
+            doc.setFontSize(8);
+            setTextColor(100, 116, 139);
+            doc.text('© 2025 My College Finance. All rights reserved.', 105, 285, { align: 'center' });
+            
+            // Save the template
+            doc.save('MCF-Document-Readiness-Assessment-Template.pdf');
+            } catch (error) {
+                console.error('Error generating template PDF:', error);
+                alert('Error generating template PDF: ' + error.message + '. Please try again.');
+            }
+        }
+        
+        // Dark mode implementation
+        function initDarkMode() {
+            const currentTheme = localStorage.getItem('mcf-theme') || 'light';
+            if (currentTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                updateThemeIcon(true);
+            }
+
+            const toggleDarkMode = () => {
+                const isDark = document.body.classList.toggle('dark-mode');
+                localStorage.setItem('mcf-theme', isDark ? 'dark' : 'light');
+                updateThemeIcon(isDark);
+            };
+
+            function updateThemeIcon(isDark) {
+                const sunIcons = document.querySelectorAll('.mcf-sun-icon');
+                const moonIcons = document.querySelectorAll('.mcf-moon-icon');
+                
+                sunIcons.forEach(icon => {
+                    icon.style.display = isDark ? 'none' : 'block';
+                });
+                
+                moonIcons.forEach(icon => {
+                    icon.style.display = isDark ? 'block' : 'none';
+                });
+            }
+
+            const toggleBtn = document.getElementById('mcf-theme-toggle');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', toggleDarkMode);
+            }
+        }
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            initDarkMode();
+            initializeAssessment();
+        });
+    </script>
+</body>
+</html>
